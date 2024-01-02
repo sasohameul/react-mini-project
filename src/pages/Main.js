@@ -9,13 +9,11 @@ const Main = () => {
   //몇번째 페이지
   const [page, setPage] = useState(1);
 
-  const getTableDataHandle = (page,limit) => {
-    fetch(
-      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`
-    )
-      .then((res) => res.json())
-      .then((res2) => setTableData(res2));
-  };
+  const getTableDataHandle = async (page,limit) => {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`);
+    const data = await response.json();
+    setTableData(data);
+  }
 
   useEffect(() => {
 
