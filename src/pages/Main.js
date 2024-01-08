@@ -1,35 +1,17 @@
-import React, { useEffect, useState } from "react";
+import PageButton from "../components/PageButton";
+import useGetTableData from "../hooks/useGetTableData";
 
 const Main = () => {
-  const [tableData, setTableData] = useState(null);
-
-  //한 페이지 내에서 보여줄 개수
-  const [limit, setLimit] = useState(10);
-
-  //몇번째 페이지
-  const [page, setPage] = useState(1);
-
-  const getTableDataHandle = async (page,limit) => {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`);
-    const data = await response.json();
-    setTableData(data);
-  }
-
-  useEffect(() => {
-
-    getTableDataHandle(page,limit);
-    
-  }, [limit, page]);
-
   
+  const[tableData,limit, setLimit, page, setPage] = useGetTableData();
+
   return (
     <>
       <div>
         <div>
           <select onChange={(e) => setLimit(e.target.value)}>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
+          {OPTION_VALUE_DATA.map((data,idx) => <option key={idx} 
+                                                       value={data}>{data}</option>)}
           </select>
         </div>
         <table>
@@ -57,15 +39,20 @@ const Main = () => {
         </table>
       </div>
       <div>
-        <button onClick={(e) => setPage(e.target.innerHTML)}>1</button>
-        <button onClick={(e) => setPage(e.target.innerHTML)}>2</button>
-        <button onClick={(e) => setPage(e.target.innerHTML)}>3</button>
-        <button onClick={(e) => setPage(e.target.innerHTML)}>4</button>
-        <button onClick={(e) => setPage(e.target.innerHTML)}>5</button>
+        {BUTTONS_DATA.map((pageNum,idx) => <PageButton key={idx} 
+                                                  pageNum={pageNum} 
+                                                  setPage={setPage}/>)}
       </div>
       <div>현재 페이지는 {page} 페이지 입니다.</div>
     </>
   );
+
+  
 };
+//페이지 번호
+const BUTTONS_DATA = [1, 2, 3, 4, 5];
+
+//option 태그 값
+const OPTION_VALUE_DATA = [10,20,50];
 
 export default Main;
