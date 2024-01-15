@@ -1,10 +1,33 @@
 import React, { Fragment } from "react";
+import styled from "styled-components";
+
+const InputInfo = styled.input`
+
+  display: flex; 
+  flex-direction: column;
+  justify-contnet: center;
+  align-items: center;
+  border: none;
+  border-bottom: 1px solid black;
+  width: 200px;
+  margin-bottom: 20px;
+  padding:8px;
+  font-size: 17px;
+
+  &:focus {
+
+    outline:none;
+  }
+
+
+`;
+
 
 const Input = ({user,onChangeUserInput}) => {
 
   return (
     <Fragment>
-      {INPUT_DATA.map((data) => <input key={data.key}
+      {INPUT_DATA.map((data,idx) => <InputInfo key={idx}
                                        type={data.type}
                                        name={data.name}
                                        placeholder={data.placeholder}
