@@ -5,20 +5,27 @@ const InputInfo = styled.input`
 
   display: flex; 
   flex-direction: column;
-  justify-contnet: center;
   align-items: center;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #536F01;
+  border-radius: 8px;
   width: 200px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding:8px;
-  font-size: 17px;
+  font-size: 15px;
 
   &:focus {
 
     outline:none;
+    background-color: white;
+
   }
 
+  //자동완성 키워드 선택 시 변하는 배경색 제어
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
 
 `;
 
@@ -27,6 +34,7 @@ const Input = ({user,onChangeUserInput}) => {
 
   return (
     <Fragment>
+      
       {INPUT_DATA.map((data,idx) => <InputInfo key={idx}
                                        type={data.type}
                                        name={data.name}
@@ -43,13 +51,13 @@ const INPUT_DATA =[
     id: 1,
     type: "text",
     name: "id",
-    placeholder: "id"
+    placeholder: "ID"
   },
   {
     id: 2,
     type: "password",
     name: "pw",
-    placeholder: "pw"
+    placeholder: "PASSWORD"
   }
 ];
 

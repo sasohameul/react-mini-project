@@ -14,19 +14,22 @@ const GlobalStyle = createGlobalStyle`
 
 }
   html,
-  #root {
-
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-  }
-
+  #root,
   body {
 
     width: 100%;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  body {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 
   }
 

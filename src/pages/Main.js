@@ -90,8 +90,8 @@ const Select = styled.select`
 // 모달
 const Modal = styled.div`
   background-color: white;
-  border: 2px solid #536F01;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16),
+              0 3px 6px rgba(0,0,0,0.23);
   color: black;
   width: 40%;
   height: 40%;

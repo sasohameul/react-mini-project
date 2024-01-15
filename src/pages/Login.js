@@ -9,7 +9,12 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 80px;
+  background-color: #fafff37d;
+  border-radius: 20px;
+  height: 40%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 
+              0 3px 6px rgba(0,0,0,0.23);
 
 
 `;
@@ -17,15 +22,15 @@ const Form = styled.form`
 const LoginButton = styled.button`
 
   all: unset;
-  width: 80px;
+  width: 186px;
   background-color: #536F01;
   color: white;
   padding: 8px;
-  border: 1px; solid #536F01;
+  border: 1px solid #536F01;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 3px;
 
   &:hover {
 
@@ -38,6 +43,12 @@ const LoginButton = styled.button`
  
 `;
 
+const SignIn = styled.div`
+
+  font-size: 20px;
+  margin-bottom: 30px;
+
+`;
 
 const Login = () => {
  
@@ -52,6 +63,7 @@ const Login = () => {
 
   return (
     <Form method="post" onSubmit={onSubmitHandle}>
+      <SignIn>Sign in</SignIn>
       <Input user={userInput}
              onChangeUserInput={onChangeInput} />
       <LoginButton type="submit">로그인</LoginButton>
