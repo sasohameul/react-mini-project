@@ -1,54 +1,34 @@
 import React from "react";
-import { BrowserRouter,Route,Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Main from "./pages/Main";
-import { createGlobalStyle } from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
-
-* {
-
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-
-}
-  html,
-  #root,
-  body {
-
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  body {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-
-  }
-
-`;
+import { useDispatch,useSelector } from "react-redux";
+import { increaseCount,decreaseCount } from "./reducers/counter";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
 
+const {count} = useSelector((state) => state.counter);
+
+const dispatch = useDispatch();
+
+const navigate = useNavigate();
+
+const increase = () => {
+dispatch(increaseCount());
+
+};
+
+const decrease = () => {
+  dispatch(decreaseCount());
+}
+
 return (
+<div>
+  {count}
+  <button onClick={increase}>증가</button>
+  <button onClick={decrease}>감소</button>
+  <button onClick={() => navigate('/NewPage')}>이동하기</button>
+</div>
 
-  <BrowserRouter>
-  <GlobalStyle />
-    <Routes>
-       <Route path="/" element={<Login/>}></Route> 
-        <Route path="/main" element={<Main/>}></Route>
-    </Routes>
-  </BrowserRouter>
-
-);
-
+)
 }
 
 export default App;
