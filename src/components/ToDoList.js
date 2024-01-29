@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, toggleTodo } from "../reducers/todo";
+import { addTodo, removeTodo, toggleTodo } from "../reducers/todo";
 import { FILTERS } from "../reducers/filter";
 import NewPage from "../NewPage";
 
@@ -11,7 +11,6 @@ const ToDoList = () => {
   // store 에 접근하여 state 가져오기 
   const todo = useSelector(state => state.todo);
   const filter = useSelector(state => state.filter);
-  console.log(filter);
 
   const onCreateTodo = (text) => {
     dispatch(addTodo(text));
@@ -19,6 +18,10 @@ const ToDoList = () => {
 
   const onToggle = (id) => {
     dispatch(toggleTodo(id));
+  }
+
+  const onDeleteTodo = (id) => {
+    dispatch(removeTodo(id));
   }
 
   const onFilteredTodo = () => {
@@ -42,6 +45,7 @@ const filteredTodo = onFilteredTodo();
     filter={filter}
     onCreateTodo={onCreateTodo}
     onToggle={onToggle}
+    onDeleteTodo={onDeleteTodo}
     filteredTodo={filteredTodo}/>
   )
 };

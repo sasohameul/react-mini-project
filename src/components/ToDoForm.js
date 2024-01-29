@@ -13,7 +13,7 @@ const ToDoForm = (props) => {
 
   const onSubmit = (e) =>{
     e.preventDefault();
-    if(text === '') alert('할일을 적어주세요');
+    if(text === '') alert('할 일을 적어주세요');
     else {
       onCreateTodo(text);
       setText('');
@@ -21,10 +21,10 @@ const ToDoForm = (props) => {
   };
   return (
     <S.StyledDiv>
-      <form onSubmit={onSubmit}>
+      <S.StyledForm onSubmit={onSubmit}>
         <S.StyledInput value={text} placeholder="오늘의 할일을 적어주세요" onChange={onChange}/>
-        <S.StyledRegiButton type="submit">등록</S.StyledRegiButton>
-      </form>
+        <S.StyledRegiButton type="submit"></S.StyledRegiButton>
+      </S.StyledForm>
     </S.StyledDiv>
   );
 };
