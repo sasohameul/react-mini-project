@@ -1,55 +1,47 @@
 import React from "react";
-import { useState } from "react";
+import ToDoForm from "./components/ToDoForm";
+import FilteredButton from "./components/FilteredButton";
 
 const TodoItem = (props) => {
   const { todo, onToggle } = props;
 
-    return (
+  return (
+    <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", verticalAlign:"middle", marginBottom:"8px"}}>
       <li
-        style={{ textDecoration: todo.done ? "line-through" : "none" }}
-        onClick={()=>onToggle(todo.id)}
+        style={{
+          textDecoration: todo.done ? "line-through" : "none",
+          marginBottom: "5px",
+        }}
+        onClick={() => onToggle(todo.id)}
       >
         {todo.text}
       </li>
-    );
-  };
+    </div>
+  );
+};
 
 const TodoList = (props) => {
-  const {todo,onToggle} = props;
+  const { filteredTodo, onToggle } = props;
+
   return (
-    <ul>
-      {todo.map((todo) => 
-        <TodoItem key={todo.id} onToggle={onToggle} todo={todo}/>
-    )}
+    <ul style={{ height: "300px" }}>
+      {filteredTodo.map((todo) => (
+        <TodoItem key={todo.id} onToggle={onToggle} todo={todo} />
+      ))}
     </ul>
   );
 };
 
 const NewPage = (props) => {
-
-  const {todo, onCreateTodo, onToggle} = props;
-  const [text, setText] = useState('');
-  
-  const onChange = (e) => {
-    setText(e.target.value);
-  }
-
-  const onSubmit = (e) =>{
-    e.preventDefault();
-    onCreateTodo(text);
-    setText('');
-  };
+  const { todo, onCreateTodo, onToggle, filteredTodo } = props;
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <input value={text} placeholder="할일을 적어주세요" onChange={onChange}/>
-        <button type="submit">등록하기</button>
-      </form>
-      <TodoList todo={todo} onToggle={onToggle} />
+      <FilteredButton />
+      <ToDoForm onCreateTodo={onCreateTodo} />
+      <TodoList todo={todo} onToggle={onToggle} filteredTodo={filteredTodo} />
     </div>
-  )
-
+  );
 };
 
 export default NewPage;
