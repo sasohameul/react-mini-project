@@ -77,6 +77,10 @@ const NewPage = (props) => {
   const remainingTodo = todo.filter(item => !item.done).length;
   return (
     <StyledBack>
+      <div style={{display: "flex", flexDirection:"column", alignItems:"center", marginBottom:"30px"}}>
+      <h1 style={{color:"#5d4037"}}>O'neulDal</h1>
+      <p style={{fontSize:"10px", color: "#f5a74b"}}>오늘의 목표를 달성합니다.</p>
+      </div>
       <FilteredButton />
       <ToDoForm onCreateTodo={onCreateTodo} />
       <TodoList
