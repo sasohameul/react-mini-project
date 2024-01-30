@@ -1,6 +1,7 @@
 const ADD_TODO = "TODO/ADD_TODO";
 const TOGGLE_TODO = "TODO/TOGGLE_TODO";
 const REMOVE_TODO = "TODO/REMOVE_TODO";
+const MOVE_TODO = "TODO/MOVE_TODO";
 
 let nextId = 1;
 //add_todo action 정의
@@ -22,6 +23,15 @@ export const removeTodo = (id) => ({
   type: REMOVE_TODO,
   id,
 });
+
+//move_todo action 정의
+export const moveTodo = (draggedId, droppedId) => ({
+  type: MOVE_TODO,
+  payload: {
+    draggedId,
+    droppedId
+  }
+})
 
 //초기값
 const initializeState = [];
@@ -45,9 +55,22 @@ export const todo = (state = initializeState, action) => {
             }
           : todo
       );
+      
       case REMOVE_TODO:
         return state.filter((todo) =>todo.id !== action.id);
 
+      case MOVE_TODO:
+        const {draggedId, droppedId} = action.payload;
+        const newState = [...state];
+        const draggedIdx = newState.findIndex(todo => todo.id === draggedId);
+        const droppedIdx = newState.findIndex(todo => todo.id === droppedId);
+
+        if(draggedIdx >= 0 && droppedIdx >= 0) {
+          const [draggedItem] = newState.splice(draggedIdx, 1);
+          newState.splice(droppedIdx, 0 , draggedItem)
+        }
+
+        return newState;
     default:
       return state;
   }

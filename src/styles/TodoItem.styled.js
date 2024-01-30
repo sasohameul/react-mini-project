@@ -9,7 +9,9 @@ export const StyledList = styled.div`
 
 export const StyledLi = styled.li`
   margin-bottom: 5px;
-  text-decoration: ${(props) => (props.done ? "line-through" : "none")};
+  text-decoration: ${(props) => (props.$done ? "line-through" : "none")};
+  color: ${(props) => (props.$done ? "darkgray" : "#5d4037")};
+  transition: box-shadow 0.3s ease, border-radius 0.3s ease; 
 `;
 
 export const StyledXbutton = styled.button`

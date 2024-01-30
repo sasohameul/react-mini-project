@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, removeTodo, toggleTodo } from "../reducers/todo";
+import { addTodo, moveTodo, removeTodo, toggleTodo } from "../reducers/todo";
 import { FILTERS } from "../reducers/filter";
 import NewPage from "../NewPage";
 
@@ -37,6 +37,10 @@ const ToDoList = () => {
     }
   };
 
+  const onDragNDrop = (draggedId, droppedId) => {
+    dispatch(moveTodo(draggedId, droppedId));
+  }
+
 const filteredTodo = onFilteredTodo();
 
   return (
@@ -46,7 +50,8 @@ const filteredTodo = onFilteredTodo();
     onCreateTodo={onCreateTodo}
     onToggle={onToggle}
     onDeleteTodo={onDeleteTodo}
-    filteredTodo={filteredTodo}/>
+    filteredTodo={filteredTodo}
+    onDragNDrop={onDragNDrop}/>
   )
 };
 

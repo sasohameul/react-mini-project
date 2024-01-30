@@ -3,6 +3,8 @@ import ToDoForm from "./components/ToDoForm";
 import FilteredButton from "./components/FilteredButton";
 import * as S from "./styles/TodoItem.styled";
 import styled from "styled-components";
+import Today from "./components/Today";
+import Title from "./components/Title";
 
 const StyledBack = styled.div`
   display: flex;
@@ -30,7 +32,7 @@ font-weight: 700;
 `;
 
 const TodoItem = (props) => {
-  const { todo, onToggle, onDeleteTodo } = props;
+  const { todo, onToggle, onDeleteTodo, onDragStart, onDragOver, onDrop, onDragEnd, onDragLeave} = props;
 
   const onToggleHandler = (e, id) => {
     e.stopPropagation();
@@ -42,9 +44,15 @@ const TodoItem = (props) => {
     onDeleteTodo(id);
   };
 
+
+
   return (
-    <S.StyledList>
-      <S.StyledLi done={todo.done} onClick={(e) => onToggleHandler(e, todo.id)}>
+    <S.StyledList draggable="true" onDragStart={(e)=>onDragStart(e, todo.id)} data-id={todo.id}
+                            onDragOver={onDragOver}
+                            onDrop={(e)=>onDrop(e, todo.id)}
+                            onDragEnd={onDragEnd}
+                            onDragLeave={onDragLeave}>
+      <S.StyledLi $done={todo.done} onClick={(e) => onToggleHandler(e, todo.id)}>
         {todo.text}
       </S.StyledLi>
       <S.StyledXbutton type="button" onClick={(e) => onDeleteHandler(e, todo.id)}>
@@ -55,7 +63,47 @@ const TodoItem = (props) => {
 };
 
 const TodoList = (props) => {
-  const { filteredTodo, onToggle, onDeleteTodo } = props;
+  const { filteredTodo, onToggle, onDeleteTodo,onDragNDrop } = props;
+
+  const handleDragStart = (e, id) => {
+    e.dataTransfer.setData("id", id.toString());
+    const currentElement = e.currentTarget;
+    currentElement.style.color = "darkgrey";
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    const currentElement = e.currentTarget;
+    currentElement.style.borderBottom = "2px solid darkgrey";
+    currentElement.style.boxShadow = "0px 4px 2px -2px rgba(0, 0, 0, 0.4)";
+    currentElement.style.borderRadius = "4px";
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const draggedId = parseInt(e.dataTransfer.getData("id"), 10);
+    const droppedId = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+    onDragNDrop(draggedId, droppedId);
+    const currentElement = e.currentTarget;
+    currentElement.style.borderBottom = "";
+    currentElement.style.boxShadow = "";
+    currentElement.style.borderRadius = "";
+  };
+
+  const handleDragLeave = (e) => {
+    const currentElement = e.currentTarget;
+    currentElement.style.borderBottom = "";
+    currentElement.style.boxShadow = "";
+    currentElement.style.borderRadius = "";
+  }
+
+  const handleDragEnd = (e) => {
+    const currentElement = e.currentTarget;
+    currentElement.style.borderBottom = "";
+    currentElement.style.boxShadow = "";
+    currentElement.style.borderRadius = "";
+  };
+
 
   return (
     <StyledUl>
@@ -65,6 +113,11 @@ const TodoList = (props) => {
           onToggle={onToggle}
           todo={todo}
           onDeleteTodo={onDeleteTodo}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragEnd={handleDragEnd}
+          onDragLeave={handleDragLeave}
         />
       ))}
     </StyledUl>
@@ -72,22 +125,22 @@ const TodoList = (props) => {
 };
 
 const NewPage = (props) => {
-  const { todo, onCreateTodo, onToggle, onDeleteTodo, filteredTodo } = props;
+  const { todo, onCreateTodo, onToggle, onDeleteTodo, filteredTodo, onDragNDrop } = props;
 
   const remainingTodo = todo.filter(item => !item.done).length;
+
   return (
     <StyledBack>
-      <div style={{display: "flex", flexDirection:"column", alignItems:"center", marginBottom:"30px"}}>
-      <h1 style={{color:"#5d4037"}}>O'neulDal</h1>
-      <p style={{fontSize:"10px", color: "#f5a74b"}}>오늘의 목표를 달성합니다.</p>
-      </div>
+      <Title />
       <FilteredButton />
       <ToDoForm onCreateTodo={onCreateTodo} />
+      <Today />
       <TodoList
         todo={todo}
         onToggle={onToggle}
         filteredTodo={filteredTodo}
         onDeleteTodo={onDeleteTodo}
+        onDragNDrop={onDragNDrop}
       />
     <StyledP>남은 할 일: {remainingTodo}</StyledP>
     </StyledBack>
